@@ -1563,62 +1563,8 @@ EXPORT_SYMBOL(sw_dma_getcurposition);
 
 /* system device class */
 
-#ifdef CONFIG_PM
-
-static struct sw_dma_chan *to_dma_chan(struct sys_device *dev)
-{
-	return container_of(dev, struct sw_dma_chan, dev);
-}
-
-static int sw_dma_suspend(struct sys_device *dev, pm_message_t state)
-{
-	struct sw_dma_chan *cp = to_dma_chan(dev);
-
-	printk(KERN_DEBUG "suspending dma channel %d\n", cp->number);
-
-	if (dma_rdreg(cp, SW_DMA_DCONF) & SW_DCONF_LOADING) {
-		/* the dma channel is still working, which is probably
-		 * a bad thing to do over suspend/resume. We stop the
-		 * channel and assume that the client is either going to
-		 * retry after resume, or that it is broken.
-		 */
-
-		printk(KERN_INFO "dma: stopping channel %d due to suspend\n",
-		       cp->number);
-
-		sw_dma_dostop(cp);
-	}
-
-	return 0;
-}
-
-static int sw_dma_resume(struct sys_device *dev)
-{
-#if 0
-	struct sw_dma_chan *cp = to_dma_chan(dev);
-	unsigned int no = cp->number | DMACH_LOW_LEVEL;
-
-	/* restore channel's hardware configuration */
-
-	if (!cp->in_use)
-		return 0;
-
-	printk(KERN_INFO "dma%d: restoring configuration\n", cp->number);
-
-	sw_dma_config(no, NULL);
-#endif
-	return 0;
-}
-
-#else
-#define sw_dma_suspend NULL
-#define sw_dma_resume  NULL
-#endif /* CONFIG_PM */
-
 struct sysdev_class dma_sysclass = {
 	.name		= "sw-dma",
-	.suspend	= sw_dma_suspend,
-	.resume		= sw_dma_resume,
 };
 
 /* kmem cache implementation */
