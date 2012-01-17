@@ -1,4 +1,3 @@
-
 OUTPUT_ARCH(arm)
 ENTRY(main)
 
@@ -7,7 +6,7 @@ SECTIONS
 	__standby_start = . ;
 	.text 0xf0000000 :
 	{
-		standby.o(.text)
+		arch/arm/mach-sun4i/pm/standby/standby.o(.text)
 		*(.text)
 	}
 	.rodata : { *(.rodata) }
@@ -18,4 +17,3 @@ SECTIONS
 	__bss_end = .;
 	__standby_end = . ;
 }
-
