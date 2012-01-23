@@ -275,6 +275,18 @@ config ARCH_VERSATILE
 	help
 	  This enables support for ARM Ltd Versatile board.
 
+config ARCH_SUN3I
+	bool "Allwinner Ltd. sun3i family"
+	select CPU_ARM926T
+	select ARM_AMBA
+	select HAVE_CLK
+	select ARM_VIC
+	# select COMMON_CLKDEV
+	select ICST
+	select GENERIC_CLOCKEVENTS
+	help
+	  This enables support for ARM Ltd Versatile board.
+
 config ARCH_SUN4I
 	bool "Allwinner Ltd. sun4i family"
 	select CPU_V7
@@ -1015,6 +1027,7 @@ source "arch/arm/mach-ux500/Kconfig"
 
 source "arch/arm/mach-versatile/Kconfig"
 
+source "arch/arm/mach-sun3i/Kconfig"
 source "arch/arm/mach-sun4i/Kconfig"
 
 source "arch/arm/mach-vexpress/Kconfig"
