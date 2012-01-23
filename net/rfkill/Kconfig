@@ -47,3 +47,8 @@ config RFKILL_GPIO
 	  If you say yes here you get support of a generic gpio RFKILL
 	  driver. The platform should fill in the appropriate fields in the
 	  rfkill_gpio_platform_data structure and pass that to the driver.
+
+config SW_RFKILL
+	bool "Softwinner rfkill module support"
+	depends on RFKILL
+	default y
