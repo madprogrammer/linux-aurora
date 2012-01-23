@@ -605,6 +605,8 @@ config TELCLOCK
 	  /sys/devices/platform/telco_clock, with a number of files for
 	  controlling the behavior of this hardware.
 
+source "drivers/char/sun4i_g2d/Kconfig"
+
 config DEVPORT
 	bool
 	depends on !M68K
