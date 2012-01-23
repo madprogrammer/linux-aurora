@@ -1,0 +1,22 @@
+menu "All winner system configure"
+	depends on ARCH_SUN4I
+
+config SW_SYSMEM_RESERVED_BASE
+	hex "System reserved memory(physical base addr)"
+	default 0x44000000
+	---help---
+	  System reserved memory base
+
+config SW_SYSMEM_RESERVED_SIZE
+	int "Memory reserved size in KB"
+	default 16448
+	---help---
+	  In KB size
+
+#config SW_PIN_TEST
+#	tristate "Test code for PIN module"
+#	default n
+#	---help---
+#	  "Test code for PIN module"
+
+endmenu
