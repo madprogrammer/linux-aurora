@@ -75,6 +75,30 @@
 ENTRY(stext)
 	setmode	PSR_F_BIT | PSR_I_BIT | SVC_MODE, r9 @ ensure svc mode
 						@ and irqs disabled
+	mov     r0, #0
+	b       _real_start
+
+#if CONFIG_CHIP_ID == 1120
+#warning "chip id: 1120"
+1:	.long   0xfdf
+	.long   0x80000000
+
+_real_start:
+	adr     r4, 1b
+	ldmia   r4, {r1, r2}
+
+#elif CONFIG_CHIP_ID == 1123
+1:	.long   0xfe0
+	.long   0x81000000
+
+_real_start:
+	adr     r4, 1b
+	ldmia   r4, {r1, r2}
+#else
+#warning "no chipd id defined"
+_real_start:
+#endif
+
 	mrc	p15, 0, r9, c0, c0		@ get processor id
 	bl	__lookup_processor_type		@ r5=procinfo r9=cpuid
 	movs	r10, r5				@ invalid processor (r5=0)?
@@ -176,11 +200,17 @@ __create_page_tables:
 	 * Now setup the pagetables for our kernel direct
 	 * mapped region.
 	 */
+	add     r0, r4,  #((0x3000000 + KERNEL_START) & 0xff000000) >> 18
+	add	r6, r3,  #48 << 20
+	str	r6, [r0, #((0x3000000 + KERNEL_START) & 0x00f00000) >> 18]
+
 	mov	r3, pc
 	mov	r3, r3, lsr #20
 	orr	r3, r7, r3, lsl #20
+
 	add	r0, r4,  #(KERNEL_START & 0xff000000) >> 18
 	str	r3, [r0, #(KERNEL_START & 0x00f00000) >> 18]!
+
 	ldr	r6, =(KERNEL_END - 1)
 	add	r0, r0, #4
 	add	r6, r4, r6, lsr #18
