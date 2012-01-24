@@ -16,6 +16,7 @@
 #include <linux/earlysuspend.h>
 #include <linux/module.h>
 #include <linux/wait.h>
+#include <linux/delay.h>
 
 #include "power.h"
 
@@ -32,6 +33,9 @@ static void stop_drawing_early_suspend(struct early_suspend *h)
 {
 	int ret;
 	unsigned long irq_flags;
+
+	/* sleep 200ms for application to prepare something */
+	msleep(200);
 
 	spin_lock_irqsave(&fb_state_lock, irq_flags);
 	fb_state = FB_STATE_REQUEST_STOP_DRAWING;
@@ -59,8 +63,13 @@ static void start_drawing_late_resume(struct early_suspend *h)
 
 static struct early_suspend stop_drawing_early_suspend_desc = {
 	.level = EARLY_SUSPEND_LEVEL_STOP_DRAWING,
+#if 0
 	.suspend = stop_drawing_early_suspend,
 	.resume = start_drawing_late_resume,
+#else
+	.suspend = NULL,
+	.resume = NULL,
+#endif
 };
 
 static ssize_t wait_for_fb_sleep_show(struct kobject *kobj,

@@ -579,6 +579,30 @@ config USB_OCTEON2_COMMON
 	bool
 	default y if USB_OCTEON_EHCI || USB_OCTEON_OHCI
 
+config USB_SW_SUN3I_HCD
+	tristate "SoftWinner SUN3I USB Host Controller support"
+	depends on USB && USB_SW_USB_MANAGER
+	help
+	    SoftWinner SUN3I USB2.0 Host Controller support.
+
+config USB_SW_SUN3I_HCD0
+	tristate "SoftWinner SUN3I USB Host Controller0"
+	depends on USB_SW_SUN3I_HCD && (USB_SW_SUN3I_USB0_HOST_ONLY || USB_SW_SUN3I_USB0_OTG)
+	help
+	    SoftWinner SUN3I USB2.0 Host Controller0.
+
+config USB_SW_SUN3I_HCD1
+	tristate "SoftWinner SUN3I USB Host Controller1"
+	depends on USB_SW_SUN3I_HCD
+	help
+	    SoftWinner SUN3I USB2.0 Host Controller1.
+
+config USB_SW_SUN3I_HCD2
+	tristate "SoftWinner SUN3I USB Host Controller2"
+	depends on USB_SW_SUN3I_HCD
+	help
+	    SoftWinner SUN3I USB2.0 Host Controller2.
+
 config USB_SW_SUN4I_HCD
 	tristate "SoftWinner SUN4I USB Host Controller support"
 	depends on USB && USB_SW_SUN4I_USB_MANAGER

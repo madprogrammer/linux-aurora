@@ -58,11 +58,11 @@ extern void printascii(char *);
 #endif
 
 /* printk's without a loglevel use this.. */
-#define DEFAULT_MESSAGE_LOGLEVEL CONFIG_DEFAULT_MESSAGE_LOGLEVEL
+#define DEFAULT_MESSAGE_LOGLEVEL 6 /* KERN_INFO */
 
 /* We show everything that is MORE important than this.. */
 #define MINIMUM_CONSOLE_LOGLEVEL 1 /* Minimum loglevel we let people use */
-#define DEFAULT_CONSOLE_LOGLEVEL 7 /* anything MORE serious than KERN_DEBUG */
+#define DEFAULT_CONSOLE_LOGLEVEL 5 /* anything MORE serious than KERN_DEBUG */
 
 DECLARE_WAIT_QUEUE_HEAD(log_wait);
 

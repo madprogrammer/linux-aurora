@@ -295,6 +295,8 @@ static int pm_noirq_op(struct device *dev,
 	int error = 0;
 	ktime_t calltime = ktime_set(0, 0), delta, rettime;
 
+	calltime.tv64 = 0;
+
 	if (initcall_debug) {
 		pr_info("calling  %s+ @ %i, parent: %s\n",
 				dev_name(dev), task_pid_nr(current),

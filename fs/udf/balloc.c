@@ -258,7 +258,7 @@ repeat:
 			goto got_block;
 
 		end_goal = (bit + 63) & ~63;
-		bit = udf_find_next_one_bit(bh->b_data, end_goal, bit);
+		bit = udf_find_next_one_bit((const long unsigned int *)bh->b_data, end_goal, bit);
 		if (bit < end_goal)
 			goto got_block;
 
@@ -270,7 +270,7 @@ repeat:
 			goto search_back;
 		}
 
-		newbit = udf_find_next_one_bit(bh->b_data,
+		newbit = udf_find_next_one_bit((const long unsigned int *)bh->b_data,
 					       sb->s_blocksize << 3, bit);
 		if (newbit < sb->s_blocksize << 3) {
 			bit = newbit;
@@ -296,7 +296,7 @@ repeat:
 				break;
 			}
 		} else {
-			bit = udf_find_next_one_bit(bh->b_data,
+			bit = udf_find_next_one_bit((const long unsigned int *)bh->b_data,
 						    sb->s_blocksize << 3,
 						    group_start << 3);
 			if (bit < sb->s_blocksize << 3)
@@ -310,7 +310,7 @@ repeat:
 	if (bit < sb->s_blocksize << 3)
 		goto search_back;
 	else
-		bit = udf_find_next_one_bit(bh->b_data, sb->s_blocksize << 3,
+		bit = udf_find_next_one_bit((const long unsigned int *)bh->b_data, sb->s_blocksize << 3,
 					    group_start << 3);
 	if (bit >= sb->s_blocksize << 3) {
 		mutex_unlock(&sbi->s_alloc_mutex);
