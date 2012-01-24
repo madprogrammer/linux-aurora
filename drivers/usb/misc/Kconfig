@@ -244,3 +244,10 @@ config USB_YUREX
 	  To compile this driver as a module, choose M here: the
 	  module will be called yurex.
 
+config USB_SUN3I_USB_TEST
+	tristate "sun3i usb test"
+	depends on USB
+	help
+	  This driver is HCD testing driver, it should be used with the
+	  application testusb.c
+
