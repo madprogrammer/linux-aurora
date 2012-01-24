@@ -1233,6 +1233,8 @@ composite_suspend(struct usb_gadget *gadget)
 	if (composite->suspend)
 		composite->suspend(cdev);
 
+	composite_disconnect(gadget); /* This should be moved somewhere else. by Cesc. */
+
 	cdev->suspended = 1;
 
 	usb_gadget_vbus_draw(gadget, 2);
