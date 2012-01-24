@@ -494,4 +494,10 @@ config INPUT_XEN_KBDDEV_FRONTEND
 	  To compile this driver as a module, choose M here: the
 	  module will be called xen-kbdfront.
 
+config  LIGHT_SENSOR_CG5121SC
+	tristate  "CG5121SC LIGHT_SENSOR driver"
+	depends on INPUT_MISC
+	help
+	  CG5121SC light sensor driver
+
 endif
