@@ -55,6 +55,11 @@ static struct wake_lock suspend_backoff_lock;
 
 static unsigned suspend_short_count;
 
+#ifdef CONFIG_EARLYSUSPEND_DELAY
+/* create lock for delay early suspend, to avoid system hungup */
+struct wake_lock ealysuspend_delay_work;
+#endif
+
 #ifdef CONFIG_WAKELOCK_STAT
 static struct wake_lock deleted_wake_locks;
 static ktime_t last_sleep_time_update;
@@ -576,6 +581,10 @@ static int __init wakelocks_init(void)
 	wake_lock_init(&unknown_wakeup, WAKE_LOCK_SUSPEND, "unknown_wakeups");
 	wake_lock_init(&suspend_backoff_lock, WAKE_LOCK_SUSPEND,
 		       "suspend_backoff");
+#ifdef CONFIG_EARLYSUSPEND_DELAY
+	wake_lock_init(&ealysuspend_delay_work, WAKE_LOCK_SUSPEND, "suspend_delay");
+	wake_lock(&ealysuspend_delay_work);
+#endif
 
 	ret = platform_device_register(&power_device);
 	if (ret) {
@@ -625,6 +634,10 @@ static void  __exit wakelocks_exit(void)
 	wake_lock_destroy(&suspend_backoff_lock);
 	wake_lock_destroy(&unknown_wakeup);
 	wake_lock_destroy(&main_wake_lock);
+#ifdef CONFIG_EARLYSUSPEND_DELAY
+	wake_lock_destroy(&ealysuspend_delay_work);
+#endif
+
 #ifdef CONFIG_WAKELOCK_STAT
 	wake_lock_destroy(&deleted_wake_locks);
 #endif
