@@ -480,8 +480,7 @@ static void spi_match_master_to_boardinfo(struct spi_master *master,
  * The board info passed can safely be __initdata ... but be careful of
  * any embedded pointers (platform_data, etc), they're copied as-is.
  */
-int __init
-spi_register_board_info(struct spi_board_info const *info, unsigned n)
+int spi_register_board_info(struct spi_board_info const *info, unsigned n)
 {
 	struct boardinfo *bi;
 	int i;
@@ -503,6 +502,7 @@ spi_register_board_info(struct spi_board_info const *info, unsigned n)
 
 	return 0;
 }
+EXPORT_SYMBOL_GPL(spi_register_board_info);
 
 /*-------------------------------------------------------------------------*/
 
