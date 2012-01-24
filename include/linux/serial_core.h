@@ -170,7 +170,7 @@
 #define PORT_NWPSERIAL	85
 
 /* MAX3100 */
-#define PORT_MAX3100    86
+#define PORT_MAX3100    99
 
 /* Timberdale UART */
 #define PORT_TIMBUART	87
@@ -205,6 +205,8 @@
 
 /* Xilinx PSS UART */
 #define PORT_XUARTPS	98
+
+#define PORT_SW         86
 
 #ifdef __KERNEL__
 
