@@ -234,4 +234,12 @@ config SERIO_PS2MULT
 	  To compile this driver as a module, choose M here: the
 	  module will be called ps2mult.
 
+config SUN4I_SERIO_SW_PS2
+	tristate "Softwinner UP PS/2 controller"
+	help
+	  Say Y here if you have Softwinner University Program PS/2 ports.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called altera_ps2.
+
 endif
