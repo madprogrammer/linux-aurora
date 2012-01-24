@@ -46,6 +46,9 @@
 #include <asm/unaligned.h>
 #include <asm/byteorder.h>
 
+#ifdef  CONFIG_USB_SW_SUN4I_HCI
+#include <mach/system.h>
+#endif
 
 #define DRIVER_AUTHOR "Roman Weissgaerber, David Brownell"
 #define DRIVER_DESC "USB 1.1 'Open' Host Controller (OHCI) Driver"
@@ -760,6 +763,29 @@ static irqreturn_t ohci_irq (struct usb_hcd *hcd)
 	 */
 	ints = ohci_readl(ohci, &regs->intrstatus);
 
+#ifdef  CONFIG_USB_SW_SUN4I_HCI
+{
+    enum sw_ic_ver ic_version = MAGIC_VER_A;
+
+    ic_version = sw_get_ic_ver();
+    if(ic_version == MAGIC_VER_A || ic_version == MAGIC_VER_B){
+        __u32 HcRhPortStatus = ohci_readl(ohci, &regs->roothub.portstatus[0]);
+
+        if((HcRhPortStatus & RH_PS_CSC) && (ints & OHCI_INTR_RHSC)){
+            printk("ohci_irq: connect status change\n");
+        }
+
+        /* clear all irq */
+        ohci_writel(ohci, ints, &regs->intrstatus);
+
+        /* clear port status */
+        ohci_writel(ohci, HcRhPortStatus, &regs->roothub.portstatus[0]);
+
+        return IRQ_HANDLED;
+    }
+}
+#endif
+
 	/* Check for an all 1's result which is a typical consequence
 	 * of dead, unclocked, or unplugged (CardBus...) devices
 	 */
@@ -815,6 +841,7 @@ static irqreturn_t ohci_irq (struct usb_hcd *hcd)
 		ohci_writel(ohci, OHCI_INTR_RHSC, &regs->intrdisable);
 		usb_hcd_poll_rh_status(hcd);
 	}
+
 
 	/* For connect and disconnect events, we expect the controller
 	 * to turn on RHSC along with RD.  But for remote wakeup events
@@ -1112,6 +1139,11 @@ MODULE_LICENSE ("GPL");
 #ifdef CONFIG_USB_OHCI_ATH79
 #include "ohci-ath79.c"
 #define PLATFORM_DRIVER		ohci_hcd_ath79_driver
+
+#ifdef CONFIG_USB_SW_SUN4I_HCI
+#include "ohci_sun4i.c"
+#define	PLATFORM_DRIVER		sw_ohci_hcd_driver
+
 #endif
 
 #if	!defined(PCI_DRIVER) &&		\

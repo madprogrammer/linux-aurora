@@ -1194,6 +1194,11 @@ MODULE_LICENSE ("GPL");
 #define	PLATFORM_DRIVER		ehci_hcd_au1xxx_driver
 #endif
 
+#ifdef CONFIG_USB_SW_SUN4I_HCI
+#include "ehci_sun4i.c"
+#define	PLATFORM_DRIVER		sw_ehci_hcd_driver
+#endif
+
 #ifdef CONFIG_USB_EHCI_HCD_OMAP
 #include "ehci-omap.c"
 #define        PLATFORM_DRIVER         ehci_hcd_omap_driver
