@@ -395,6 +395,16 @@ config SPI_TOPCLIFF_PCH
 	  SPI driver for the Topcliff PCH (Platform Controller Hub) SPI bus
 	  used in some x86 embedded processors.
 
+config SPI_SUN4I
+	tristate "SUN4I SPI Controller"
+	depends on ARM_AMBA
+	help
+		Allwinner Soc SPI controller,present on SUN4I chips.
+
+if SPI_SUN4I
+source "drivers/spi/sun4i-spi/Kconfig"
+endif
+
 config SPI_TXX9
 	tristate "Toshiba TXx9 SPI controller"
 	depends on GENERIC_GPIO && CPU_TX49XX
@@ -465,6 +475,12 @@ config SPI_TLE62X0
 	  such as the TLE6220, TLE6230 and TLE6240.  This provides a
 	  sysfs interface, with each line presented as a kind of GPIO
 	  exposing both switch control and diagnostic feedback.
+
+config SPI_SP08A
+	tristate "SPANSION 08A"
+	depends on ARM_AMBA && SPI_MASTER
+	help
+	  SUN4I SPI CONTROLLER TEST
 
 #
 # Add new SPI protocol masters in alphabetical order above this line
