@@ -155,4 +155,13 @@ struct clk *clk_get_sys(const char *dev_id, const char *con_id);
 int clk_add_alias(const char *alias, const char *alias_dev_name, char *id,
 			struct device *dev);
 
+/**
+ * clk_reset - module reset control
+ * @clk: clock source
+ * @reset: reset operation, 0-disable reset, 1-enable reset;
+ *
+ * Enable module enter reset state or not;
+ */
+int clk_reset(struct clk *clk, int reset);
+
 #endif
