@@ -974,6 +974,15 @@ config TI_DAVINCI_CPDMA
 	  To compile this driver as a module, choose M here: the module
 	  will be called davinci_cpdma.  This is recommended.
 
+config WEMAC_SUN3I
+	tristate "wemac support(sun3i)"
+	depends on ARCH_SUN3I
+	---help---
+	  Support for softwinner chipset.
+
+	  To compile this driver as a module, choose M here.  The module
+	  will be called wemac.
+
 config WEMAC_SUN4I
 	tristate "wemac support(sun4i)"
 	depends on ARCH_SUN4I

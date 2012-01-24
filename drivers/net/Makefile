@@ -256,6 +256,7 @@ obj-$(CONFIG_SMSC911X) += smsc911x.o
 obj-$(CONFIG_PXA168_ETH) += pxa168_eth.o
 obj-$(CONFIG_BFIN_MAC) += bfin_mac.o
 
+obj-$(CONFIG_WEMAC_SUN3I) += sun3i/
 obj-$(CONFIG_WEMAC_SUN4I) += sun4i/
 
 obj-$(CONFIG_DM9000) += dm9000.o
