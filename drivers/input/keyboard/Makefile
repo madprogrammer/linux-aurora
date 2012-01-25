@@ -53,3 +53,4 @@ obj-$(CONFIG_KEYBOARD_XTKBD)		+= xtkbd.o
 obj-$(CONFIG_KEYBOARD_W90P910)		+= w90p910_keypad.o
 obj-$(CONFIG_KEYBOARD_SUN4IKEYPAD)	+= sun4i-keypad.o
 obj-$(CONFIG_KEYBOARD_SUN4I_KEYBOARD)	+= sun4i-keyboard.o
+obj-$(CONFIG_KEYBOARD_HV2605_KEYBOARD)	+= hv2605.o

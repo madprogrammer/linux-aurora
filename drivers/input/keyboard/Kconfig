@@ -578,4 +578,10 @@ config KEYBOARD_SUN4I_KEYBOARD
 	  Say Y here to enable the keyboard, support 7 keys.
 	  based on verify board.
 
+config KEYBOARD_HV2605_KEYBOARD
+	tristate "SUN4I HV2605 KEY BOARD support"
+	depends on I2C
+	help
+	  Say Y here to enable the keyboard, support 5 keys.
+
 endif
