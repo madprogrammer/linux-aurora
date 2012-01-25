@@ -732,6 +732,11 @@ config TOUCHSCREEN_TPS6507X
 	  To compile this driver as a module, choose M here: the
 	  module will be called tps6507x_ts.
 
+config  TOUCHSCREEN_FT
+	tristate  "ft5x06 touchscreen driver"
+	help
+	  ft5x06 touchscreen driver
+
 config  TOUCHSCREEN_GT801
 	tristate  "dpt microelctronics gt801 touchscreen driver"
 	depends on I2C
