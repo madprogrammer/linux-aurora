@@ -587,4 +587,8 @@ config KEYBOARD_HV2605_KEYBOARD
 config IR_SUN4I
 	tristate "sun4i IR  support"
 	depends on ARCH_SUN4I
+
+config IR_SUN3I
+	tristate "sun3i IR support"
+	depends on ARCH_SUN3I
 endif
