@@ -732,6 +732,11 @@ config TOUCHSCREEN_TPS6507X
 	  To compile this driver as a module, choose M here: the
 	  module will be called tps6507x_ts.
 
+config  TOUCHSCREEN_SUN4I_TS
+	tristate  "sun4i-ts touchscreen driver"
+	help
+	  sun4i-ts touchscreen driver
+
 config  TOUCHSCREEN_ZT8031
 	tristate  "ZT8031 touchscreen driver"
 	help
