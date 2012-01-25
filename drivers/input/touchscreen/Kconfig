@@ -748,6 +748,11 @@ config  TOUCHSCREEN_SUN4I_TS
 	help
 	  sun4i-ts touchscreen driver
 
+config  TOUCHSCREEN_FT5X_TS
+	tristate  "ft5x touchscreen driver"
+	help
+	  byd0x7ets touchscreen driver
+
 config  TOUCHSCREEN_ZT8031
 	tristate  "ZT8031 touchscreen driver"
 	help
