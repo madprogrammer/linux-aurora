@@ -98,7 +98,7 @@ struct collect_ops collect_arg;
 #endif
 
 
-DECLARE_MUTEX(nand_mutex);
+DEFINE_SEMAPHORE(nand_mutex);
 static unsigned char volatile IS_IDLE = 1;
 u32 nand_handle=0;
 static struct clk *ahb_nand_clk = NULL;
@@ -784,7 +784,6 @@ static int nand_add_dev(struct nand_blk_ops *nandr, struct nand_disk *part)
 		return -EBUSY;
 	}
 
-	//init_MUTEX(&dev->sem);
 	list_add_tail(&dev->list, &nandr->devs);
 
  added:
@@ -904,7 +903,7 @@ int nand_blk_register(struct nand_blk_ops *nandr)
 	spin_lock_init(&nandr->queue_lock);
 	init_completion(&nandr->thread_exit);
 	init_waitqueue_head(&nandr->thread_wq);
-	init_MUTEX(&nandr->nand_ops_mutex);
+	sema_init(&nandr->nand_ops_mutex,1);
 
 	nandr->rq= blk_init_queue(nand_blk_request, &nandr->queue_lock);
 	if (!nandr->rq) {
