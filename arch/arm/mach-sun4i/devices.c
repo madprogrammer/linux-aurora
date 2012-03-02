@@ -15,7 +15,6 @@
 #include <linux/bootmem.h>
 #include <linux/fs.h>
 #include <linux/proc_fs.h>
-#include <linux/android_pmem.h>
 
 #include <linux/errno.h>
 #include <linux/miscdevice.h>
@@ -42,75 +41,6 @@
 #include <mach/script_v2.h>
 #include <mach/gpio_v2.h>
 #include <mach/system.h>
-
-#ifdef CONFIG_ANDROID_PMEM
-/*
- *  Android pmem devices
- */
-static struct android_pmem_platform_data android_pmem_pdata = {
-	.name = "pmem",
-	.no_allocator = 1,
-	.cached = 1,
-	.buffered = 0,
-};
-
-static struct android_pmem_platform_data android_pmem_adsp_pdata = {
-	.name = "pmem_adsp",
-	.no_allocator = 0,
-	.cached = 0,
-	.buffered = 0,
-};
-
-static struct platform_device android_pmem_device0 = {
-	.name = "android_pmem",
-	.id = 0,
-	.dev = {.platform_data = &android_pmem_pdata },
-};
-
-static struct platform_device android_pmem_device1 = {
-	.name = "android_pmem",
-	.id = 1,
-	.dev = {.platform_data = &android_pmem_adsp_pdata },
-};
-
-static int __init init_pmem_devs(void)
-{
-	void *pmem_base = NULL;
-	unsigned long size = CONFIG_ANDROID_PMEM_SIZE * 1024 * 1024;
-
-	pmem_base = (void *)CONFIG_ANDROID_PMEM_BASE;
-	android_pmem_pdata.start = (unsigned long)pmem_base;
-	android_pmem_pdata.size = size;
-
-	pr_info("pmem: base=0x%x, size=0x%x\n", (unsigned int)android_pmem_pdata.start,
-		(unsigned int)android_pmem_pdata.size);
-
-	return 0;
-}
-
-/*
- * All platform devices
- */
-static struct platform_device *aw_pdevs[] __initdata = {
-	&android_pmem_device0,
-};
-
-
-int __init aw_pdevs_init(void)
-{
-	pr_info("Platform devices init\n");
-
-	if (init_pmem_devs()) {
-		return -ENOMEM;
-	}
-
-	platform_add_devices(aw_pdevs, ARRAY_SIZE(aw_pdevs));
-
-	return 0;
-}
-arch_initcall(aw_pdevs_init);
-
-#endif /* CONFIG_ANDROID_PMEM */
 
 static atomic_t sw_sys_status = ATOMIC_INIT(0);
 
