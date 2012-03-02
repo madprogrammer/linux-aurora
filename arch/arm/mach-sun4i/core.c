@@ -526,9 +526,6 @@ char *script_get_str(const char *script_buf, const char *main_key, const char *s
 }
 
 MACHINE_START(SUN4I, "sun4i")
-/* Maintainer: ARM Ltd/Deep Blue Solutions Ltd */
-.phys_io        = 0x01c00000,
-	.io_pg_offst    = ((0xf1c00000) >> 18) & 0xfffc,
 	.map_io         = sw_map_io,
 	.fixup          = sw_fixup,
 	.reserve        = sw_reserve,
