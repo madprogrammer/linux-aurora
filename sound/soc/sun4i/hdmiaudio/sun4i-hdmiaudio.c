@@ -360,7 +360,7 @@ static int sun4i_hdmiaudio_hw_params(struct snd_pcm_substream *substream,
 	else
 		dma_data = &sun4i_hdmiaudio_pcm_stereo_in;
 
-	snd_soc_dai_set_dma_data(rtd->dai->cpu_dai, substream, dma_data);
+	snd_soc_dai_set_dma_data(rtd->cpu_dai, substream, dma_data);
 
 	return 0;
 }
@@ -371,7 +371,7 @@ static int sun4i_hdmiaudio_trigger(struct snd_pcm_substream *substream,
 	int ret = 0;
 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
 	struct sun4i_dma_params *dma_data =
-					snd_soc_dai_get_dma_data(rtd->dai->cpu_dai, substream);
+					snd_soc_dai_get_dma_data(rtd->cpu_dai, substream);
 
 	switch (cmd) {
 		case SNDRV_PCM_TRIGGER_START:
@@ -487,7 +487,7 @@ u32 sun4i_hdmiaudio_get_clockrate(void)
 EXPORT_SYMBOL_GPL(sun4i_hdmiaudio_get_clockrate);
 
 
-static int sun4i_hdmiaudio_probe(struct platform_device *pdev, struct snd_soc_dai *dai)
+static int sun4i_hdmiaudio_probe(struct snd_soc_dai *dai)
 {
 		int reg_val = 0;
 
@@ -623,12 +623,12 @@ static struct snd_soc_dai_ops sun4i_hdmiaudio_dai_ops = {
 		.set_clkdiv = sun4i_hdmiaudio_set_clkdiv,
 		.set_sysclk = sun4i_hdmiaudio_set_sysclk,
 };
-struct snd_soc_dai sun4i_hdmiaudio_dai = {
-	.name 		= "sun4i-hdmiaudio",
-	.id 			= 0,
-	.probe 		= sun4i_hdmiaudio_probe,
-	.suspend 	= sun4i_hdmiaudio_suspend,
-	.resume 	= sun4i_hdmiaudio_resume,
+static struct snd_soc_dai_driver sun4i_hdmiaudio_dai_driver = {
+	.name		= "sun4i-hdmiaudio",
+	.id		= 0,
+	.probe		= sun4i_hdmiaudio_probe,
+	.suspend	= sun4i_hdmiaudio_suspend,
+	.resume		= sun4i_hdmiaudio_resume,
 	.playback = {
 		.channels_min = 1,
 		.channels_max = 2,
@@ -640,6 +640,11 @@ struct snd_soc_dai sun4i_hdmiaudio_dai = {
 		.rates = SUN4I_I2S_RATES,
 		.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S20_3LE | SNDRV_PCM_FMTBIT_S24_LE,},
 	.ops = &sun4i_hdmiaudio_dai_ops,
+};
+struct snd_soc_dai sun4i_hdmiaudio_dai = {
+	.name	= "sun4i-hdmiaudio",
+	.id	= 0,
+	.driver	= &sun4i_hdmiaudio_dai_driver,
 };
 EXPORT_SYMBOL_GPL(sun4i_hdmiaudio_dai);
 
