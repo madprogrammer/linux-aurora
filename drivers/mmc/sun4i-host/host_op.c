@@ -1030,8 +1030,7 @@ static int __devinit awsmc_probe(struct platform_device *pdev)
     mmc->max_req_size	= 0x800000;              //32bit byte counter = 2^32 - 1
     mmc->max_seg_size	= mmc->max_req_size;
 
-    mmc->max_phys_segs	= 256;
-    mmc->max_hw_segs	= 256;
+    mmc->max_segs	= 256;
 
     if (awsmc_resource_request(smc_host))
     {
