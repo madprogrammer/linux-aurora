@@ -568,8 +568,8 @@ static __s32 sw_hcd_bsp_exit(__u32 usbc_no, sw_hcd_io_t *sw_hcd_io)
 static __s32 sw_hcd_io_init(__u32 usbc_no, struct platform_device *pdev, sw_hcd_io_t *sw_hcd_io)
 {
 	__s32 ret = 0;
-	spinlock_t lock = SPIN_LOCK_UNLOCKED;
 	unsigned long flags = 0;
+	DEFINE_SPINLOCK(lock);
 
 	sw_hcd_io->usb_vbase  = (void __iomem *)SW_VA_USB0_IO_BASE;
 	sw_hcd_io->sram_vbase = (void __iomem *)SW_VA_SRAM_IO_BASE;

@@ -27,7 +27,6 @@
 #include <linux/slab.h>
 #include <linux/list.h>
 #include <linux/interrupt.h>
-#include <linux/smp_lock.h>
 #include <linux/errno.h>
 
 #include  "sw_usb_typedef.h"
