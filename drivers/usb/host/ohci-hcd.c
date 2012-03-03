@@ -1139,11 +1139,11 @@ MODULE_LICENSE ("GPL");
 #ifdef CONFIG_USB_OHCI_ATH79
 #include "ohci-ath79.c"
 #define PLATFORM_DRIVER		ohci_hcd_ath79_driver
+#endif
 
 #ifdef CONFIG_USB_SW_SUN4I_HCI
 #include "ohci_sun4i.c"
 #define	PLATFORM_DRIVER		sw_ohci_hcd_driver
-
 #endif
 
 #if	!defined(PCI_DRIVER) &&		\
