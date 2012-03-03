@@ -25,7 +25,6 @@
 #include <linux/errno.h>
 #include <linux/mutex.h>
 #include <linux/slab.h>
-#include <linux/smp_lock.h>
 #include <linux/preempt.h>
 #include <linux/cdev.h>
 #include <linux/platform_device.h>
@@ -992,7 +991,7 @@ static int __init cedardev_init(void)
 	memset(cedar_devp, 0, sizeof(struct cedar_dev));
 	cedar_devp->irq = VE_IRQ_NO;
 
-	init_MUTEX(&cedar_devp->sem);
+	sema_init(&cedar_devp->sem, 1);
 	init_waitqueue_head(&cedar_devp->wq);
 
 	memset(&cedar_devp->iomap_addrs, 0, sizeof(struct iomap_para));
