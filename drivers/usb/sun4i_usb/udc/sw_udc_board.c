@@ -26,7 +26,6 @@
 #include <linux/ioport.h>
 #include <linux/sched.h>
 #include <linux/slab.h>
-#include <linux/smp_lock.h>
 #include <linux/errno.h>
 #include <linux/err.h>
 #include <linux/init.h>
@@ -334,8 +333,8 @@ __s32 sw_udc_bsp_exit(__u32 usbc_no, sw_udc_io_t *sw_udc_io)
 __s32 sw_udc_io_init(__u32 usbc_no, struct platform_device *pdev, sw_udc_io_t *sw_udc_io)
 {
 	__s32 ret = 0;
-	spinlock_t lock = SPIN_LOCK_UNLOCKED;
 	unsigned long flags = 0;
+	DEFINE_SPINLOCK(lock);
 
 	sw_udc_io->usb_vbase  = (void __iomem *)SW_VA_USB0_IO_BASE;
 	sw_udc_io->sram_vbase = (void __iomem *)SW_VA_SRAM_IO_BASE;

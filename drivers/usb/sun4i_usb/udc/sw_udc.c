@@ -25,7 +25,6 @@
 #include <linux/ioport.h>
 #include <linux/sched.h>
 #include <linux/slab.h>
-#include <linux/smp_lock.h>
 #include <linux/errno.h>
 #include <linux/init.h>
 #include <linux/timer.h>
@@ -2993,7 +2992,8 @@ s32  usbd_stop_work(void)
 *
 *******************************************************************************
 */
-int usb_gadget_register_driver(struct usb_gadget_driver *driver)
+int usb_gadget_probe_driver(struct usb_gadget_driver *driver,
+			    int (*bind)(struct usb_gadget *))
 {
 	struct sw_udc *udc = the_controller;
 	int retval = 0;
@@ -3009,10 +3009,10 @@ int usb_gadget_register_driver(struct usb_gadget_driver *driver)
 		return -EBUSY;
     }
 
-	if (!driver->bind || !driver->setup
+	if (!bind || !driver->setup
 			|| driver->speed < USB_SPEED_FULL) {
 		DMSG_PANIC("ERR: Invalid driver: bind %p setup %p speed %d\n",
-			driver->bind, driver->setup, driver->speed);
+			bind, driver->setup, driver->speed);
 		return -EINVAL;
 	}
 
@@ -3028,7 +3028,7 @@ int usb_gadget_register_driver(struct usb_gadget_driver *driver)
 
 	DMSG_INFO_UDC("[%s]: binding gadget driver '%s'\n", gadget_name, driver->driver.name);
 
-	if ((retval = driver->bind (&udc->gadget)) != 0) {
+	if ((retval = bind (&udc->gadget)) != 0) {
 	    DMSG_PANIC("ERR: Error in bind() : %d\n",retval);
 		device_del(&udc->gadget.dev);
 		goto register_error;
@@ -3770,7 +3770,7 @@ static void __exit udc_exit(void)
 	return ;
 }
 
-EXPORT_SYMBOL(usb_gadget_register_driver);
+EXPORT_SYMBOL(usb_gadget_probe_driver);
 EXPORT_SYMBOL(usb_gadget_unregister_driver);
 
 module_init(udc_init);
@@ -3781,5 +3781,3 @@ MODULE_DESCRIPTION(DRIVER_DESC);
 MODULE_VERSION(DRIVER_VERSION);
 MODULE_LICENSE("GPL");
 MODULE_ALIAS("platform:softwinner-usbgadget");
-
-
