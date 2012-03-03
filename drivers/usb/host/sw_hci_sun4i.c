@@ -29,7 +29,6 @@
 #include <linux/ioport.h>
 #include <linux/sched.h>
 #include <linux/slab.h>
-#include <linux/smp_lock.h>
 #include <linux/errno.h>
 #include <linux/init.h>
 #include <linux/timer.h>
@@ -597,8 +596,8 @@ static int close_clock(struct sw_hci_hcd *sw_hci, u32 ohci)
 static void usb_passby(struct sw_hci_hcd *sw_hci, u32 enable)
 {
 	unsigned long reg_value = 0;
-	spinlock_t lock = SPIN_LOCK_UNLOCKED;
 	unsigned long flags = 0;
+	DEFINE_SPINLOCK(lock);
 
 	spin_lock_init(&lock);
 	spin_lock_irqsave(&lock, flags);
