@@ -8,7 +8,6 @@
 #include <linux/errno.h>
 #include <linux/mutex.h>
 #include <linux/slab.h>
-#include <linux/smp_lock.h>
 #include <linux/preempt.h>
 #include <linux/cdev.h>
 #include <linux/platform_device.h>
