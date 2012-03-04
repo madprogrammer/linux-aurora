@@ -606,7 +606,6 @@ static struct sun4i_cpu_freq_t suspend_freq;
 *Description: back up cpu frequency configuration for suspend;
 *
 *Arguments  : policy    cpu frequency policy;
-*             pmsg      power management message;
 *
 *Return     : return 0,
 *
@@ -614,7 +613,7 @@ static struct sun4i_cpu_freq_t suspend_freq;
 *
 *********************************************************************************************************
 */
-static int sun4i_cpufreq_suspend(struct cpufreq_policy *policy, pm_message_t pmsg)
+static int sun4i_cpufreq_suspend(struct cpufreq_policy *policy)
 {
     struct sun4i_cpu_freq_t suspend;
 
