@@ -76,7 +76,11 @@ static int vibrator_get_time(struct timed_output_dev *dev)
 {
 	if (hrtimer_active(&vibe_timer)) {
 		ktime_t r = hrtimer_get_remaining(&vibe_timer);
+#ifdef CONFIG_KTIME_SCALAR
+		return r.tv64 / 1000000;
+#else
 		return r.tv.sec * 1000 + r.tv.nsec / 1000000;
+#endif
 	} else
 		return 0;
 }
