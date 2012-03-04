@@ -1000,7 +1000,7 @@ static int aw16xx_spi_hw_exit(struct aw16xx_spi *aw_spi)
 }
 
 
-static int __init aw16xx_spi_probe(struct platform_device *pdev)
+static int aw16xx_spi_probe(struct platform_device *pdev)
 {
 	struct resource	*mem_res, *dma_res;
 	struct aw16xx_spi *aw_spi;
